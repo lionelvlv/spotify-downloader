@@ -1,0 +1,20 @@
+# Spotify API
+spotipy>=2.23.0
+
+# Audio download and extraction
+yt-dlp>=2023.12.0
+
+# Audio metadata tagging
+mutagen>=1.47.0
+
+# Configuration management
+python-dotenv>=1.0.0
+
+# HTTP requests
+requests>=2.31.0
+
+# Note: FFmpeg must be installed separately on your system
+# Install instructions:
+# - Ubuntu/Debian: sudo apt-get install ffmpeg
+# - macOS: brew install ffmpeg
+# - Windows: Download from https://ffmpeg.org/download.html

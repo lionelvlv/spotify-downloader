@@ -6,6 +6,7 @@ from .downloader import Downloader, DownloadError
 from .converter import Converter, ConversionError
 from .tagger import Tagger, TaggingError
 from .orchestrator import Orchestrator, ProcessResult
+from .playlist_generator import PlaylistGenerator
 
 __all__ = [
     'SpotifyClient',
@@ -19,4 +20,5 @@ __all__ = [
     'TaggingError',
     'Orchestrator',
     'ProcessResult',
+    'PlaylistGenerator'
 ]

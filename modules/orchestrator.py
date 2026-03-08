@@ -19,7 +19,7 @@ from utils import (
     cleanup_temp_files,
     ProgressLogger,
 )
-
+from .playlist_generator import PlaylistGenerator
 
 @dataclass
 class ProcessResult:
@@ -127,12 +127,17 @@ class Orchestrator:
             if self.config.dry_run:
                 self._dry_run(tracks, output_base)
                 return self.stats
-            
+
             # Process tracks
             results = self._process_tracks(tracks, output_base)
-            
+
+            # Create playlists
+            self._create_playlists(results, output_base, playlist_info['name'])
+
             # Log summary
             self._log_summary(results)
+            
+            
             
             # Cleanup temp files
             if self.config.clean_temp_on_exit:
@@ -335,3 +340,54 @@ class Orchestrator:
                     self.logger.info(f"  - {result.track.title}: {result.error}")
         
         self.logger.info("=" * 70 + "\n")
+
+    def _create_playlists(self, results: List[ProcessResult], output_base: Path, playlist_name: str):
+        """
+        Create playlist files from successful conversions.
+        
+        Args:
+            results: List of ProcessResult objects
+            output_base: Base output directory
+            playlist_name: Name of the playlist
+        """
+        # Get all successful tracks
+        successful_tracks = [
+            result.output_path 
+            for result in results 
+            if result.success and result.output_path and result.output_path.exists()
+        ]
+        
+        if not successful_tracks:
+            self.logger.warning("No successful tracks to add to playlist")
+            return
+        
+        # Sort by path for consistent ordering
+        successful_tracks.sort()
+        
+        # Create playlist generator
+        playlist_gen = PlaylistGenerator()
+        
+        # Create playlists in different formats
+        try:
+            # M3U (most compatible)
+            m3u_path = output_base / f"{playlist_name}.m3u"
+            playlist_gen.create_m3u(successful_tracks, m3u_path, playlist_name)
+            self.logger.info(f"Created M3U playlist: {m3u_path}")
+            
+            # M3U8 (UTF-8)
+            m3u8_path = output_base / f"{playlist_name}.m3u8"
+            playlist_gen.create_m3u8(successful_tracks, m3u8_path, playlist_name)
+            self.logger.info(f"Created M3U8 playlist: {m3u8_path}")
+            
+            # XSPF (VLC native)
+            xspf_path = output_base / f"{playlist_name}.xspf"
+            playlist_gen.create_xspf(successful_tracks, xspf_path, playlist_name)
+            self.logger.info(f"Created XSPF playlist: {xspf_path}")
+            
+            # PLS (alternative format)
+            pls_path = output_base / f"{playlist_name}.pls"
+            playlist_gen.create_pls(successful_tracks, pls_path, playlist_name)
+            self.logger.info(f"Created PLS playlist: {pls_path}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create playlists: {e}")

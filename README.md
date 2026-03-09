@@ -2,17 +2,7 @@
 
 Convert Spotify playlists to high-quality tagged `.opus` files. This tool uses Spotify only for metadata and obtains audio from public sources.
 
-## ⚠️ Legal Notice
-
-This tool is for **educational purposes only**. Users are responsible for:
-- Complying with Spotify's Terms of Service (using API only for metadata)
-- Complying with YouTube's and other platforms' Terms of Service
-- Ensuring they have rights to download the content
-- Only downloading content they legally own or have permission to download
-
-**Downloading copyrighted content without permission may be illegal in your jurisdiction.**
-
-## 🌟 Features
+## Features
 
 - **Clean Architecture**: Modular design with clear separation of concerns
 - **Parallel Processing**: Download multiple tracks simultaneously
@@ -23,7 +13,7 @@ This tool is for **educational purposes only**. Users are responsible for:
 - **Resume Support**: Skips already converted files by default
 - **Customizable Output**: Configurable folder structure and filenames
 
-## 📋 Requirements
+## Requirements
 
 ### System Requirements
 - Python 3.9 or higher
@@ -45,7 +35,7 @@ brew install ffmpeg
 **Windows:**
 Download from [ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
 
-## 🚀 Installation
+## Installation
 
 1. **Clone or download this repository**
 
@@ -76,7 +66,7 @@ SPOTIFY_CLIENT_ID=your_client_id_here
 SPOTIFY_CLIENT_SECRET=your_client_secret_here
 ```
 
-## 💻 Usage
+## Usage
 
 ### Basic Usage
 
@@ -172,7 +162,7 @@ Logging Options:
   --log-file          Write logs to file
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 spotify-to-opus/
@@ -193,7 +183,7 @@ spotify-to-opus/
     └── string_similarity.py # Matching algorithms
 ```
 
-## 🔧 How It Works
+## How It Works
 
 1. **Metadata Retrieval**: Fetches track information from Spotify API
 2. **Audio Search**: Searches public sources (YouTube) for matching audio
@@ -203,7 +193,7 @@ spotify-to-opus/
 6. **Tagging**: Embeds metadata and cover art using Mutagen
 7. **Organization**: Saves to structured folders
 
-## 🎯 Default Output Structure
+## Default Output Structure
 
 ```
 output/
@@ -215,7 +205,7 @@ output/
             └── ...
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 **"FFmpeg not found"**
 - Ensure FFmpeg is installed and in your system PATH
@@ -239,14 +229,14 @@ output/
 - Ensure you have write permissions to output directory
 - Try running with appropriate permissions
 
-## 🔒 Privacy & Security
+## Privacy & Security
 
 - Your Spotify credentials are only used for API access (read-only)
 - No user data is collected or transmitted
 - All processing happens locally on your machine
 - Temporary files are cleaned up automatically (unless `--no-cleanup` is used)
 
-## 📝 Configuration Files
+## Configuration Files
 
 ### `.env` File Format
 ```
@@ -257,43 +247,9 @@ OPUS_BITRATE=128k            # Optional
 MAX_CONCURRENT_TRACKS=3      # Optional
 ```
 
-## 🤝 Contributing
-
-Contributions are welcome! Areas for improvement:
-- Additional audio source providers
-- Better matching algorithms
-- GUI interface
-- Batch playlist processing
-- Audio quality detection
-
-## 📄 License
-
-This project is provided as-is for educational purposes.
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Spotipy](https://github.com/plamere/spotipy) - Spotify API wrapper
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp) - Universal media downloader
 - [Mutagen](https://github.com/quodlibet/mutagen) - Audio metadata library
 - [FFmpeg](https://ffmpeg.org/) - Audio/video processing
-
-## ❓ FAQ
-
-**Q: Is this legal?**
-A: Using Spotify's API for metadata is allowed. Downloading copyrighted content without permission may be illegal. This tool is for educational purposes only.
-
-**Q: Why Opus format?**
-A: Opus offers excellent quality at low bitrates, is open-source, and widely supported.
-
-**Q: Can I use other audio formats?**
-A: Currently only Opus is supported, but the converter module can be extended.
-
-**Q: What happens if a track fails?**
-A: Failed tracks are logged and skipped. Other tracks continue processing.
-
-**Q: Can I resume an interrupted conversion?**
-A: Yes, by default it skips already converted files. Use `--no-skip` to re-process.
-
-**Q: How accurate is the audio matching?**
-A: The algorithm uses title, artist, and duration matching. Accuracy is typically 90%+ for popular music.
-# spotify-downloader
